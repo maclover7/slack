@@ -51,7 +51,12 @@ App.prototype._loadConfiguration = function() {
 
   if (fs.existsSync(this.configPath)) {
     var contents = fs.readFileSync(this.configPath, 'utf8')
-    this.teams = JSON.parse(contents).teams
+
+    if (contents) {
+      this.teams = JSON.parse(contents).teams
+    } else {
+      this.teams = []
+    }
   } else {
     fs.writeFile(this.configPath, JSON.stringify(baseConfig), function(err) {
       if (err) {

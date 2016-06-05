@@ -4,7 +4,7 @@ var AppMenu = function(app) {
 }
 
 AppMenu.prototype.build = function() {
-  that = this;
+  that = this
 
   this.menuTemplate[0].submenu.push(
     { type: 'separator' },
@@ -12,7 +12,7 @@ AppMenu.prototype.build = function() {
     {
       label: 'Manage Teams',
       click() {
-        that.app.displayWindow('home')
+        that.displayWindow('home')
       }
     }
   )

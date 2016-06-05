@@ -1,0 +1,18 @@
+{
+  "name": "maclover7-slack",
+  "version": "1.0.0",
+  "description": "A Slack app powered by Electron",
+  "main": "index.js",
+  "scripts": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maclover7/slack.git"
+  },
+  "author": "Jon Moss <me@jonathanmoss.me>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/maclover7/slack/issues"
+  },
+  "homepage": "https://github.com/maclover7/slack#readme"
+}

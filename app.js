@@ -30,6 +30,14 @@ App.prototype.displayWindow = function(name) {
   }
 
   newWindow.show()
+  newWindow.webContents.executeJavaScript("var MacGapImpersonator = function() {}")
+  notifier = "MacGapImpersonator.prototype.growl = new (function() { "+
+    "this.notify = function(args) { " +
+      "n = new Notification(args.title, { body: args.content }); " +
+      "n.onclick = new(function() { window.focus(); args.onclick }); " +
+    "}})"
+  newWindow.webContents.executeJavaScript(notifier)
+  newWindow.webContents.executeJavaScript("window.macgap = new MacGapImpersonator()")
   this.activeWindow = newWindow
 
   that = this
@@ -114,6 +122,7 @@ App.prototype._setupTeamWindow = function(team) {
   })
 
   teamWindow.loadURL(`https://${team}.slack.com`)
+  teamWindow.show()
   teamWindow.hide()
   this.windows[team] = teamWindow
 }

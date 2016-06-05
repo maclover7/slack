@@ -12,13 +12,7 @@ var App = function(electron) {
 App.prototype.boot = function() {
   // Load in teams configuration
   this._loadConfiguration()
-
-  // Create the browser window.
-  homeWindow = new this.BrowserWindow({ width: 800, height: 600 })
-  homeWindow.loadURL(`file://${__dirname}/index.html`)
-  homeWindow.hide()
-  this.windows['home'] = homeWindow
-  this.displayWindow('home')
+  this._setupHomePage()
 }
 
 App.prototype.displayWindow = function(name) {
@@ -58,6 +52,15 @@ App.prototype._loadConfiguration = function() {
 
     this.teams = {}
   }
+}
+
+App.prototype._setupHomePage = function() {
+  // Create the browser window.
+  homeWindow = new this.BrowserWindow({ width: 800, height: 600 })
+  homeWindow.loadURL(`file://${__dirname}/index.html`)
+  homeWindow.hide()
+  this.windows['home'] = homeWindow
+  this.displayWindow('home')
 }
 
 module.exports = App

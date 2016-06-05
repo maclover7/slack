@@ -4,6 +4,7 @@
   "description": "A Slack app powered by Electron",
   "main": "index.js",
   "scripts": {
+    "start": "electron index.js"
   },
   "repository": {
     "type": "git",
@@ -14,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/maclover7/slack/issues"
   },
-  "homepage": "https://github.com/maclover7/slack#readme"
+  "homepage": "https://github.com/maclover7/slack#readme",
+  "devDependencies": {
+    "electron-prebuilt": "^1.2.1"
+  }
 }

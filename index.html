@@ -5,13 +5,106 @@
     }
   </style>
 
+  <script type="text/javascript">
+    window.$ = window.jQuery = require('jquery')
+  </script>
+
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+  <script type="text/javascript">
+    var fs = require('fs')
+    var configPath = require('electron').remote.app.getPath('userData') + '/maclover7-slack.json'
+
+    $(document).ready(function() {
+      // ADD TEAM
+      $("#addTeam").on('submit', function() {
+        name = this.children[0].value
+        addTeam(name)
+      })
+
+      // Startup the application
+      initializeTeamsList()
+    })
+
+    function addTeam(name) {
+      config = _loadConfiguration()
+      config.teams.push(name)
+      _saveConfiguration(config)
+
+      window.location.reload(true)
+    }
+
+    // ADD TEAMS TO LIST
+    function initializeTeamsList() {
+      var teamsList = []
+      var teams = _loadConfiguration().teams
+
+      $.each(teams, function(i, item) {
+        teamsList.push('<li data-id=' + item + '>' +
+            // remove label
+            "<span class='label label-danger' id='removeTeam'>Remove</span> " +
+            item + '</li>')
+      })
+
+      $(document).ready(function() {
+        $("li").on('click', 'span#removeTeam', function() {
+          name = $(this.parentElement).data('id')
+
+          if (confirm('Confirm you want to remove ' + name + ':') == true) {
+            removeTeam(name)
+          }
+        })
+      })
+
+      $('#teamsList').append(teamsList.join(''))
+    }
+
+    function _loadConfiguration() {
+      var contents = fs.readFileSync(configPath, 'utf8')
+      return JSON.parse(contents)
+    }
+
+    function removeTeam(name) {
+      config = _loadConfiguration()
+      config.teams.splice(config.teams.indexOf(name), 1)
+      _saveConfiguration(config)
+
+      window.location.reload(true)
+    }
+
+    function _saveConfiguration(config) {
+      fs.writeFile(configPath, JSON.stringify(config), function(err) {
+        if (err) {
+          return console.log(err)
+        }
+
+        console.log("Updated configuration file.")
+      })
+    }
+  </script>
+
 </head>
 
 <body>
   <div class="center">
     <h1>Time to get Slackin'!</h1>
 
-    <h3>You know the drill -- check out the "Team Switcher" button in the menu bar
+    <h3>You know the drill -- check out the "Teams" button in the menu bar
       to select a team!</h3>
   </div>
+
+  <hr>
+
+  <h3 class="center">Team Manager</h3>
+
+  <ul id="teamsList"></ul>
+
+  <p>Add a team:</p>
+
+  <p>Enter the handle for your organization (test123 if test123.slack.com)
+  <form id="addTeam">
+    <input type="text" placeholder="" />
+    <button type="submit">Add a team</button>
+  </form>
 </body>

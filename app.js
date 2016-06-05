@@ -38,7 +38,7 @@ App.prototype.displayWindow = function(name) {
 
 App.prototype._loadConfiguration = function() {
   baseConfig = {
-    teams: {}
+    teams: []
   }
 
   var fs = require('fs')

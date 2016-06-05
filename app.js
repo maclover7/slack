@@ -1,11 +1,15 @@
+var AppMenu = require('./appmenu.js')
+
 var App = function(electron) {
   this.electron = electron
   // Module to create native browser window.
   this.BrowserWindow = electron.BrowserWindow
-  this.configPath = electron.app.getPath('userData') + '/maclover7-slack.json'
+  this.Menu = electron.Menu
 
+  this.configPath = electron.app.getPath('userData') + '/maclover7-slack.json'
   this.teams = {}
   this.windows = {}
+
   let activeWindow
 }
 
@@ -13,6 +17,7 @@ App.prototype.boot = function() {
   // Load in teams configuration
   this._loadConfiguration()
   this._setupHomePage()
+  this._setupMenu()
 }
 
 App.prototype.displayWindow = function(name) {
@@ -61,6 +66,14 @@ App.prototype._setupHomePage = function() {
   homeWindow.hide()
   this.windows['home'] = homeWindow
   this.displayWindow('home')
+}
+
+App.prototype._setupMenu = function() {
+  var appMenu = new AppMenu(this)
+  var appMenu = appMenu.build()
+
+  var menu = this.Menu.buildFromTemplate(appMenu)
+  this.Menu.setApplicationMenu(menu)
 }
 
 module.exports = App

@@ -4,6 +4,7 @@
   "description": "A Slack app powered by Electron",
   "main": "index.js",
   "scripts": {
+    "package": "epi",
     "start": "electron index.js"
   },
   "repository": {

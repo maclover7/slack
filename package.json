@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/maclover7/slack#readme",
   "devDependencies": {
+    "electron-packager-interactive": "0.0.5",
     "electron-prebuilt": "^1.2.1"
   },
   "dependencies": {
